@@ -28,7 +28,6 @@ export class CalculatorButtonComponent {
   @Input() public isCommand: boolean;
   @Input() public isDoubleSize: boolean;
 
-
   @Output() public onClick: EventEmitter<string>;
 
   public isPressed: boolean;
