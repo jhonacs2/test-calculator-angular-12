@@ -1,0 +1,6 @@
+<button [ngClass]="{'is-double-size':isDoubleSize,
+                    'is-pressed':isPressed}"
+        (click)="handleClick()"
+        #button>
+  <ng-content></ng-content>
+</button>
