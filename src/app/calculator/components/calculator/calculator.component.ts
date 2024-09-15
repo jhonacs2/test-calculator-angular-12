@@ -1,4 +1,4 @@
-import {Component, QueryList, ViewChildren} from '@angular/core';
+import {ChangeDetectionStrategy, Component, QueryList, ViewChildren} from '@angular/core';
 import {CalculatorService} from "../../services/calculator.service";
 import {CalculatorButtonComponent} from "../calculator-button/calculator-button.component";
 import {Observable} from "rxjs";
@@ -9,7 +9,8 @@ import {Observable} from "rxjs";
   styleUrls: ['./calculator.component.scss'],
   host: {
     '(document:keyup)': 'handleKeyboardEvent($event)'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalculatorComponent {
   @ViewChildren(CalculatorButtonComponent) public calculatorButtonRef!: QueryList<CalculatorButtonComponent>;
@@ -20,9 +21,9 @@ export class CalculatorComponent {
 
 
   constructor(private _calculatorService: CalculatorService) {
-    this.resultText = this._calculatorService.resultText.asObservable()
-    this.subResultText = this._calculatorService.subResultText.asObservable()
-    this.lastOperator = this._calculatorService.lastOperator.asObservable()
+    this.resultText = this._calculatorService.getResultText();
+    this.subResultText = this._calculatorService.getSubResultText();
+    this.lastOperator = this._calculatorService.getLastOperator();
   }
 
   public handleClick(key: string) {
@@ -30,7 +31,6 @@ export class CalculatorComponent {
   }
 
   public handleKeyboardEvent(event: KeyboardEvent) {
-    console.log(event)
     const keyEquivalents: Record<string, string> = {
       Escape: 'C',
       Clear: 'C',
@@ -38,7 +38,6 @@ export class CalculatorComponent {
       '/': '÷',
       Enter: '=',
     };
-    console.log('test0');
     const key = event.key;
     const keyValue = keyEquivalents[key] ?? key;
 

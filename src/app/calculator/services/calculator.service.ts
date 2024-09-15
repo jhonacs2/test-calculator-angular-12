@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 const numbers: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 const operators: string[] = ['+', '-', '*', '/', '%'];
@@ -19,29 +19,16 @@ export class CalculatorService {
     this._lastOperator = new BehaviorSubject<string>('+');
   }
 
-
-  public get resultText(): BehaviorSubject<string> {
-    return this._resultText;
+  public getResultText(): Observable<string> {
+    return this._resultText.asObservable();
   }
 
-  set resultText(value: BehaviorSubject<string>) {
-    this._resultText = value;
+  public getSubResultText(): Observable<string> {
+    return this._subResultText.asObservable();
   }
 
-  public get subResultText(): BehaviorSubject<string> {
-    return this._subResultText;
-  }
-
-  set subResultText(value: BehaviorSubject<string>) {
-    this._subResultText = value;
-  }
-
-  public get lastOperator(): BehaviorSubject<string> {
-    return this._lastOperator;
-  }
-
-  set lastOperator(value: BehaviorSubject<string>) {
-    this._lastOperator = value;
+  public getLastOperator(): Observable<string> {
+    return this._lastOperator.asObservable();
   }
 
   public constructNumber(value: string): void {
