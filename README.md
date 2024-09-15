@@ -1,27 +1,43 @@
-# AngularCalculator12
+# Angular Calculator - Testing Focus
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.18.
+This project is an Angular 12 calculator app. The focus of this documentation is on the unit testing strategy and implementation using Jasmine and Karma.
+> Are you taking fernando herrera's Angular Pro course? Well this repo will help you how to do unit tests in angular 12.
 
-## Development server
+## Features of the Calculator
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- **Basic Arithmetic Operations**: Supports addition, subtraction, multiplication, and division.
+- **Keyboard Support**: Handles keyboard events for operations and special keys (`Enter`, `Escape`, etc.).
+- **Component-based Architecture**: Built using Angular components and services.
 
-## Code scaffolding
+## Testing Strategy
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The calculator project emphasizes thorough unit testing of both components and services to ensure functionality, correctness, and maintainability. Below are the key testing strategies and examples used in the project.
 
-## Build
+### Tools and Libraries
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Jasmine**: Test framework used to write unit tests.
+- **Karma**: Test runner for executing the tests.
+- **SpyObj**: Used to mock services and track method calls.
+- **RxJS**: Used to handle observables, which are tested with operators like `of()` and `first()`.
 
-## Running unit tests
+### Unit Tests Overview
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. **Component Testing**: Focus on the interaction between the `CalculatorComponent` and its child components like `CalculatorButtonComponent`.
+  - Mocking the `CalculatorService` to simulate the behavior of the service without invoking actual logic.
+  - Verifying that the correct number of calculator buttons (`CalculatorButtonComponent`) is rendered.
+  - Testing the behavior of keyboard events to ensure they trigger the appropriate service methods.
 
-## Running end-to-end tests
+2. **Service Testing**: The `CalculatorService` is tested separately to verify the correct logic for handling operations, managing state, and handling special keys like `C` (clear) and `Backspace`.
+  - Observables such as `getResultText()`, `getSubResultText()`, and `getLastOperator()` are mocked and tested to ensure correct values are emitted.
+  - Complex calculations (e.g., addition, subtraction) are tested by simulating multiple operations.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Key Tests Implemented
 
-## Further help
+#### Component Tests (`CalculatorComponent`)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **Initialization Test**: Verifies that the component is created successfully and the service methods are called.
+
+  ```typescript
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
